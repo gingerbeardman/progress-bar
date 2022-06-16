@@ -8,6 +8,7 @@ local gfx <const> = playdate.graphics
 local playerSprite = nil
 
 local progressPercent = 0
+local textOverlay = gfx.image.new(1,1)
 
 playdate.display.setRefreshRate(20)
 
@@ -29,6 +30,11 @@ function myGameSetUp()
     surroundSprite:moveTo( 200, 200 )
     surroundSprite:add()
 
+    textOverlay = gfx.image.new(surroundSprite.width, surroundSprite.height)
+    textSprite = gfx.sprite.new( textOverlay )
+    textSprite:moveTo( 200, 200 )
+    textSprite:add()
+	
     local backgroundImage = gfx.image.new( "Images/background" )
     assert( backgroundImage )
     
@@ -44,6 +50,11 @@ end
 
 function updateProgress()
 	progressSprite:setClipRect(progressSprite.x-progressSprite.width/2,progressSprite.y-progressSprite.height/2,progressPercent*2,progressSprite.height)
+
+    textOverlay:clear(gfx.kColorClear)
+    gfx.lockFocus(textOverlay)
+    gfx.drawText(progressPercent.."%", 100,2)
+    gfx.unlockFocus()
 end
 
 myGameSetUp()
