@@ -9,11 +9,11 @@ local playerSprite = nil
 
 local progressPercent = 0
 
-playdate.display.setRefreshRate(10)
+playdate.display.setRefreshRate(20)
 
 function myGameSetUp()
 
-    local progressImage = gfx.imagetable.new("Images/progress-snake")
+    local progressImage = gfx.imagetable.new("Images/progress-dither")
     assert( progressImage )
 
     infillSprite = gfx.sprite.new( progressImage[1] )
@@ -28,10 +28,10 @@ function myGameSetUp()
     surroundSprite = gfx.sprite.new( progressImage[2] )
     surroundSprite:moveTo( 200, 200 )
     surroundSprite:add()
-	
+
     local backgroundImage = gfx.image.new( "Images/background" )
     assert( backgroundImage )
-
+    
     gfx.sprite.setBackgroundDrawingCallback(
         function( x, y, width, height )
             gfx.setClipRect( x, y, width, height )
@@ -50,7 +50,7 @@ myGameSetUp()
 
 function playdate.update()
 
-    progressPercent = progressPercent + (math.random(0,4)/2)
+    progressPercent = progressPercent + (math.random(0,4)//2)
 	if progressPercent > 120 then progressPercent = -20 end
 	updateProgress()
 
